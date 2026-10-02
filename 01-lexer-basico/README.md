@@ -21,12 +21,16 @@ LexToken(ID,'y',1,9)
 - Os 4 campos de cada token: tipo, valor, linha, posição
 - O 10 virou int (por causa do int() em t_NUMBER)
 
+## Observações
+
+- O lexer pega sempre o trecho mais longo que casa (abc123 vira um ID só).
+- ID não pode começar com dígito, mas pode conter dígitos depois.
+- "45xyz" vira NUMERO(45) + ID(xyz): o lexer não acusa erro, quem
+  rejeitaria isso seria o parser.
+- Escape em regex: só em + \* ? . ( ) [ ] { } | ^ $ \ (a / não precisa).
+
 ## Exercícios
 
-- [ ] 1. Trocar a entrada para "x $ 10" e observar o t_error
-- [ ] 2. Adicionar \* e / como novos tokens
-- [ ] 3. Inverter a ordem de duas regras de função e ver se muda algo
-
-## O que aprendi / dúvidas
-
-(anote aqui)
+- [x] 1. Trocar a entrada para caractere inválido e observar o t_error
+- [x] 2. Adicionar \* e / como novos tokens
+- [ ] 3. Inverter a ordem de regras de função e comparar
