@@ -1,9 +1,11 @@
 import ply.lex as lex
 
-tokens = ['NUMERO', 'MAIS', 'MENOS', 'ID']
+tokens = ['NUMERO', 'MAIS', 'MENOS', 'ID', 'MULTIPLICA', 'DIVIDE']
 
 t_MAIS = r'\+'
 t_MENOS = r'-'
+t_MULTIPLICA = r'\*'
+t_DIVIDE = r'\/'
 t_ID = r'[a-zA-Z_][a-zA-Z_0-9]*'
 t_ignore = ' \t'
 
@@ -18,6 +20,6 @@ def t_error(t):
 
 lexer = lex.lex()
 
-lexer.input("x + 10 - y")
+lexer.input("a * b / 2")
 for tok in lexer:
     print(tok)
