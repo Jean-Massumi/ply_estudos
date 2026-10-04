@@ -8,6 +8,7 @@ conta linhas e descarta comentários.
 ## Arquivos
 
 - `lexer.py`: lexer com reservadas (se, senao, enquanto), linhas e comentários
+- `exercicio_literals.py`: mesmo lexer usando `literals` para os operadores simples
 
 ## Como rodar
 
@@ -22,17 +23,33 @@ python lexer.py
 
 ## Exercícios
 
-- [ ] 1. Testar "se senao senaox" (senaox deve continuar ID)
-- [ ] 2. Testar "Se" (maiúsculo): reservada ou ID? Por quê?
-- [ ] 3. Comentar a linha `t.type = ...` e ver o se virar ID
-- [ ] 4. Remover o t_novalinha e ver o lineno ficar 1 em tudo
-- [ ] 5. Adicionar a palavra reservada `imprimir`
-- [ ] 6. (opcional) Trocar t_MAIS, t_MENOS e t_ATRIBUI por `literals`
+- [x] 1. Testar "se senao senaox" (senaox continua ID)
+- [x] 2. Testar "Se" (maiúsculo): vira ID
+- [x] 3. Comentar a linha `t.type = ...`: reservadas viram ID
+- [x] 4. Remover t_novalinha: lineno fica 1 e o \n cai no t_error
+- [x] 5. Adicionar a palavra reservada `imprimir`
+- [x] 6. (opcional) Trocar t_MAIS, t_MENOS e t_ATRIBUI por `literals`
+
+## Literals (exercicio_literals.py)
+
+- `literals = ['+', '-', '=']` substitui as variáveis `t_MAIS`, `t_MENOS` e `t_ATRIBUI`.
+- Os nomes dos operadores saem da lista `tokens`.
+- O tipo do token passa a ser o próprio caractere: `LexToken(+,'+',1,7)`.
+- Só serve para 1 caractere. `==` continua precisando de `t_IGUAL`.
+- Literais são testados depois das regras normais, então `==` ganha de `=`.
+- `t_ignore` não é substituído por `literals`: continua separado.
+
+### Usar ou não
+
+- A favor: menos código, sem regex nem escapes, e na gramática do yacc dá para escrever `'+'`.
+- Contra: perde nomes legíveis (`MAIS`), mistura dois estilos quando há operadores compostos, e não aceita lógica.
 
 ## Observações
 
-(preencha depois de fazer os exercícios)
-
-## O que aprendi / dúvidas
-
-(anote aqui)
+- O dicionário `reservadas` diferencia maiúscula de minúscula: "Se" é ID.
+  Para ignorar a diferença, consultar com `t.value.lower()` (decisão de projeto).
+- Reservada só vale se o texto for exatamente igual: "senaox" é ID.
+- Sem a linha `t.type = reservadas.get(...)`, todas as reservadas viram ID.
+- O `\n` não está em t_ignore: sem t_novalinha ele cai no t_error.
+- t_novalinha tem dois papéis: consumir o \n e atualizar o lineno.
+- Comentário: `\#.*` vai do # até o fim da linha (o `.` não casa \n).
