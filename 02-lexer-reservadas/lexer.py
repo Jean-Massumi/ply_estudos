@@ -5,6 +5,7 @@ reservadas = {
     'se': 'SE',
     'senao': 'SENAO',
     'enquanto': 'ENQUANTO',
+    'imprimir': 'IMPRIMIR'
 }
 
 tokens = ['NUMERO', 'ID', 'MAIS', 'MENOS', 'ATRIBUI'] + list(reservadas.values())
@@ -38,11 +39,17 @@ def t_error(t):
 
 lexer = lex.lex()
 
-entrada = """x = 10
-se x
-# isto é um comentário
-enquanto y
-"""
+# entrada = """x = 10
+# se x
+# # isto é um comentário
+# enquanto y
+# """
+
+# entrada = "se senao senaox"
+
+# entrada = "se Se SE"
+
+entrada = "imprimir x\nimprimir"
 
 lexer.input(entrada)
 for tok in lexer:
