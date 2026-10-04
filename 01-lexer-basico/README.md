@@ -12,6 +12,10 @@ Entender como o lexer transforma texto em tokens.
 ## Como rodar
 
 python lexer.py
+
+Digite uma entrada por vez no prompt (linha vazia só reabre o prompt;
+Ctrl+C sai).
+
 python exercicio_ordem.py
 
 ## Saída esperada (entrada: "x + 10 - y")
