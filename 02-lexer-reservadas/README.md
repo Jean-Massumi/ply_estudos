@@ -7,12 +7,14 @@ conta linhas e descarta comentários.
 
 ## Arquivos
 
-- `lexer.py`: lexer com reservadas (se, senao, enquanto), linhas e comentários
-- `exercicio_literals.py`: mesmo lexer usando `literals` para os operadores simples
+- `lexer.py`: lexer com reservadas, linhas e comentários (modo interativo e modo arquivo)
+- `teste.txt`: entrada multilinha para testar a contagem de linhas e comentários
+- `exercicio_literals.py`: mesmo lexer usando `literals`
 
 ## Como rodar
 
-python lexer.py
+Modo interativo: digite uma linha por vez (Ctrl+C sai).
+Modo arquivo (várias linhas): python lexer.py < teste.txt
 
 ## Conceitos
 

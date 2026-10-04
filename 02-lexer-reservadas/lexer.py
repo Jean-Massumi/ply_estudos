@@ -1,4 +1,5 @@
 import ply.lex as lex
+import sys 
 
 # Palavras reservadas: texto da linguagem -> tipo do token
 reservadas = {
@@ -39,18 +40,35 @@ def t_error(t):
 
 lexer = lex.lex()
 
-# entrada = """x = 10
-# se x
-# # isto é um comentário
-# enquanto y
-# """
+if __name__ == "__main__":
+    if sys.stdin.isatty():
+        # modo interativo: uma linha por vez
+        while True:
+            try:
+                entrada = input("> ")
+            except (EOFError, KeyboardInterrupt):
+                break
 
-# entrada = "se senao senaox"
+            if not entrada:
+                continue
 
-# entrada = "se Se SE"
+            lexer.lineno = 1          # reinicia a contagem de linhas
+            lexer.input(entrada)
+            for tok in lexer:
+                print(tok)
+    else:
+        # modo arquivo: lê tudo de uma vez (aceita várias linhas)
+        lexer.lineno = 1
+        lexer.input(sys.stdin.read())
+        for tok in lexer:
+            print(tok)
 
-entrada = "imprimir x\nimprimir"
-
-lexer.input(entrada)
-for tok in lexer:
-    print(tok)
+# Para testar no prompt (uma linha por vez; Ctrl+C sai):
+#   se x                -> SE, ID
+#   se senao senaox     -> SE, SENAO, ID (senaox não é reservada)
+#   Se                  -> ID (o dicionário diferencia maiúscula)
+#   x = 10 # comentário -> ID, ATRIBUI, NUMERO (comentário descartado)
+#   imprimir x          -> IMPRIMIR, ID
+#
+# Para testar várias linhas, crie um arquivo (ex.: teste.txt) e rode:
+#   python lexer.py < teste.txt

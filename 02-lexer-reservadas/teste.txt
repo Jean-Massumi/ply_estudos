@@ -1,0 +1,4 @@
+   x = 10
+   se x
+   # isto é um comentário
+   enquanto y
