@@ -1,4 +1,5 @@
 import ply.lex as lex
+import sys
 
 tokens = ['NUMERO', 'MAIS', 'MENOS', 'ID', 'MULTIPLICA', 'DIVIDE']
 
@@ -20,13 +21,24 @@ def t_error(t):
 
 lexer = lex.lex()
 
-# Entradas de teste (troque o valor de "entrada"):
-#   Ex. 1: "x + 10"        |  "x & 10"
-#   Ex. 2: "a * b / 2"     |  "a ** b"
-#   Obs.:  "abc123 + x"    |  "45xyz"
+if __name__ == "__main__":
+    while True:
+        try:
+            entrada = input("> ")
+        except (EOFError, KeyboardInterrupt):
+            break
 
-entrada = "x + 10"
+        if not entrada:
+            continue
 
-lexer.input(entrada)
-for tok in lexer:
-    print(tok)
+        lexer.input(entrada)
+        for tok in lexer:
+            print(tok)
+
+# Para testar (digite uma por vez; Ctrl+C sai):
+#   x + 10          -> ID, MAIS, NUMERO
+#   x & 10          -> ID, aviso de caractere inválido, NUMERO
+#   a * b / 2       -> ID, MULTIPLICA, ID, DIVIDE, NUMERO
+#   a ** b          -> ID, MULTIPLICA, MULTIPLICA, ID (o lexer aceita)
+#   abc123 + x      -> ID, MAIS, ID
+#   45xyz           -> NUMERO(45), ID(xyz), sem erro léxico
